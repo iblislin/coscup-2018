@@ -66,7 +66,7 @@ julia 0.6:
 \end{frame}
 
 
-\begin{frame}[fragile]{Construct Expressions}
+\begin{frame}[fragile]{Expressions}
 \begin{lstlisting}
   julia> typeof(e)
   Expr
@@ -78,6 +78,20 @@ Fields of \texttt{Expr}:
   \item \texttt{args::Array\{Any,1\}}
 \end{itemize}
 
+\end{frame}
+
+
+\begin{frame}[fragile]{Expressions}
+\begin{lstlisting}
+julia> e.head
+:call
+
+julia> e.args
+3-element Array{Any,1}:
+   :+
+ 42
+  1
+\end{lstlisting}
 \end{frame}
 
 
