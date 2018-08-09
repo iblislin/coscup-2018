@@ -110,4 +110,52 @@ julia> eval(e)
 \end{frame}
 
 
+\begin{frame}[fragile]{Expressions is mutable}
+
+  所以可以各種改。
+
+\begin{lstlisting}
+  e.args[1] = :-
+  e.args[3] = 50
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{其他生出 Expression 的方式}
+
+  1. 直接 call constructor
+
+\begin{lstlisting}
+  Expr(:call, :+, 2, 3)
+\end{lstlisting}
+
+  \pause
+
+  2. Quoting
+
+\begin{lstlisting}
+  :(1 + 2)
+\end{lstlisting}
+\begin{lstlisting}
+  quote
+    1 + 2
+    2 + 3
+  end
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Printing Expr Instance}
+\begin{lstlisting}
+  dump(e)
+\end{lstlisting}
+
+\begin{lstlisting}
+  Meta.show_sexpr(e)
+\end{lstlisting}
+
+\end{frame}
+
+
 \end{document}
