@@ -95,4 +95,19 @@ julia> e.args
 \end{frame}
 
 
+\begin{frame}[fragile]{Expressions}
+  程式已經用 \texttt{Expr} 來表示了，那麼怎麼執行？
+
+  \pause
+
+\begin{lstlisting}
+julia> e
+:(42 + 1)
+
+julia> eval(e)
+43
+\end{lstlisting}
+\end{frame}
+
+
 \end{document}

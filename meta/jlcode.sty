@@ -394,14 +394,14 @@ morestring=[s]{L"}{"},%
 
 
 % basic font
-\def\lstbasicfont{\color{jlstring}\ttfamily\scriptsize\selectfont}
+\def\lstbasicfont{\color{jlstring}\ttfamily\small\selectfont}
 
 % gerneral style of the code block
 \lstset{basicstyle={\lstbasicfont}}
 \lstset{showstringspaces=false}
 \lstset{upquote=true}
 \lstset{tabsize=4}
-\lstset{aboveskip={1.5\baselineskip},belowskip={1.5\baselineskip}}
+\lstset{aboveskip={1.0\baselineskip},belowskip={1.0\baselineskip}}
 
 % creating the code box
 \lstset{backgroundcolor=\color{jlbackground}, rulecolor=\color{jlrule}}
@@ -410,7 +410,7 @@ morestring=[s]{L"}{"},%
 \newlength{\bfem}
 \settowidth{\bfem}{\lstbasicfont{m}}
 \newlength{\xmrgn}
-\setlength{\xmrgn}{(\textwidth - 80\bfem)*\real{0.5}}
+\setlength{\xmrgn}{(\textwidth - 40\bfem)*\real{0.5}}
 \lstset{basewidth=\bfem}
 \lstset{linewidth=\textwidth}
 \lstset{xleftmargin=\xmrgn, xrightmargin=\xmrgn}
