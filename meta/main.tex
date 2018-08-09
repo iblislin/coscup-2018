@@ -1,0 +1,84 @@
+\documentclass[14pt]{beamer}
+
+\usetheme{Warsaw}
+
+\usepackage{listings}
+\usepackage{jlcode}
+\lstset{language=julia}
+
+\usepackage{xeCJK}
+\setCJKmainfont{HanWangWCL06}
+
+
+\title{Metaprogramming in Julia}
+\author{Iblis Lin}
+\institute{}
+\date{2018/8/11}
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Introduction}
+  粗淺的分類
+  \begin{itemize}
+    \item Text-based
+      \begin{itemize}
+        \item e.g. macro in C
+      \end{itemize}
+    \item Abstract Syntax Tree Level
+      \begin{itemize}
+        \item Lisp
+        \item Julia
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Introduction}
+  Metaprogramming 把程式本身視為 data 的一種
+\end{frame}
+
+
+\begin{frame}{Introduction}
+  那麼有 data structure 跟 manipulations
+
+  \pause
+  在 Julia 中有 \alert{\texttt{Expr}} 這個 type
+\end{frame}
+
+
+\begin{frame}[fragile]{Construct Expressions}
+
+julia 0.7/1.0:
+\begin{lstlisting}
+  julia> e = Meta.parse("42 + 1")
+  :(42 + 1)
+\end{lstlisting}
+
+julia 0.6:
+\begin{lstlisting}
+  julia> e = parse("42 + 1")
+  :(42 + 1)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Construct Expressions}
+\begin{lstlisting}
+  julia> typeof(e)
+  Expr
+\end{lstlisting}
+
+Fields of \texttt{Expr}:
+\begin{itemize}
+  \item \texttt{head::Symbol}
+  \item \texttt{args::Array\{Any,1\}}
+\end{itemize}
+
+\end{frame}
+
+
+\end{document}
