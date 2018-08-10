@@ -318,7 +318,7 @@ julia> struct Bar
 julia> bar = Bar(1, false, "good")
 Bar(1, false, "good")
 
-julia> make_show(Bar, [:magic, :b])
+julia> make_show(Bar, :magic, :b)
 
 julia> bar
 magic -> good
@@ -335,7 +335,7 @@ b -> false
   basewidth=4pt,
   xleftmargin=-10pt,
   framexleftmargin=0pt,]
-function make_show(T::DataType, fields::Vector{Symbol})
+function make_show(T::DataType, fields::Symbol...)
   fields = QuoteNode.(fields)
   print_exprs = [ :(println(io, "$($f) -> ", getfield(x, $f))) for f in fields]
 
@@ -402,10 +402,47 @@ end
 
 \begin{lstlisting}
   julia> @m "Iblis"
-Hello, Iblis
+  Hello, Iblis
 \end{lstlisting}
 
   而所有參數用空白切開。
+
+  \pause
+
+\begin{lstlisting}
+  julia> @macroexpand @m "Iblis"
+  :((Main.println)("Hello, ", "Iblis"))
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Macro -- Example}
+
+\begin{lstlisting}[
+  basicstyle={\color{jlstring}\ttfamily\scriptsize\selectfont},
+  linewidth=350pt,
+  basewidth=4pt,
+  xleftmargin=-10pt,
+  framexleftmargin=0pt,]
+macro make_show(T::Symbol, fields::Symbol...)
+  fields = QuoteNode.(fields)
+  print_exprs = [ :(println(io, "$($f) -> ", getfield(x, $f))) for f in fields]
+  :(Base.show(io::IO, x::$T) = $(print_exprs...))
+end
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Macro -- Parse time and Runtime}
+
+\begin{lstlisting}
+  macro m(...)
+    # parse time
+    # ...
+
+    return :(#= excuted at runtime =#)
+  end
+\end{lstlisting}
 \end{frame}
 
 
