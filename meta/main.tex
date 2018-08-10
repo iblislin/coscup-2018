@@ -499,4 +499,44 @@ end
 \end{frame}
 
 
+\begin{frame}[c]{}
+  \centering
+  \huge
+  Generated Functions
+\end{frame}
+
+
+\begin{frame}[fragile]{Generated Functions}
+  當我們需要根據 Type 資訊，動態產生出不同的 function body，
+  那麼就使用 generated functions。
+\end{frame}
+
+
+\begin{frame}[fragile]{Generated Functions}
+  對於已經看過的 input type 組合，generated functions 的
+  function body 會 cache 起來，下次直接使用。
+\end{frame}
+
+
+\begin{frame}[fragile]{Generated Functions}
+
+\begin{lstlisting}
+  @generated function bar(x)
+    if x <: Integer
+      :(x ^ 2)
+    else
+      :(x)
+    end
+  end
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[c]{}
+  \centering
+  \Huge
+  Q \& A
+\end{frame}
+
+
 \end{document}
