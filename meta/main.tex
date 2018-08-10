@@ -434,7 +434,6 @@ end
 
 
 \begin{frame}[fragile]{Macro -- Parse time and Runtime}
-
 \begin{lstlisting}
   macro m(...)
     # parse time
@@ -442,6 +441,60 @@ end
 
     return :(#= excuted at runtime =#)
   end
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[c]{}
+  \centering
+  \huge
+  Non-Standard String Literals
+\end{frame}
+
+
+\begin{frame}[fragile]{Non-Standard String Literals}
+  這個東西就是透過 macro 完成的
+
+  e.g.
+
+\begin{lstlisting}
+  julia> VERSION
+  v"1.0.0"
+
+  julia> v"4.2"
+  v"4.2.0"
+
+  julia> typeof(v"4.2")
+  VersionNumber
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Non-Standard String Literals}
+\begin{lstlisting}
+  julia> using Sockets
+
+  julia> ip"1.1.1.1"
+  ip"1.1.1.1
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Non-Standard String Literals}
+  只要定義 \texttt{@x\_str} 即可。
+
+  \pause
+
+\begin{lstlisting}
+  macro foo_str(s)
+    :(reverse($s))
+  end
+\end{lstlisting}
+
+  \pause
+\begin{lstlisting}
+  julia> foo"abc"
+  "cba"
 \end{lstlisting}
 \end{frame}
 
