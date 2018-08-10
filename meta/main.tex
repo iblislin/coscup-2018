@@ -345,4 +345,68 @@ end
 \end{lstlisting}
 \end{frame}
 
+
+\begin{frame}[c]{}
+  \centering
+  \huge
+  Macro
+\end{frame}
+
+
+\begin{frame}[fragile]{Macro}
+  Macro 能夠接受參數，而 return 一個 expression，並且\alert{立即執行}這個 expression。
+
+  \pause
+
+\begin{lstlisting}
+  julia> macro m()
+         :(println("Hello, Macro"))
+       end
+  @m (macro with 1 method)
+
+  julia> @m()
+  Hello, Macro
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Macro}
+
+  試試看參數
+
+\begin{lstlisting}
+  julia> macro m(name)
+         :(println("Hello, ", $name))
+       end
+  @m (macro with 2 methods)
+
+  julia> @m("Iblis")
+  Hello, Iblis
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Macro -- Debugging}
+
+  可以用 \texttt{@macroexpand} 這個 macro 來看看你的 macro 回傳了啥
+
+\begin{lstlisting}
+  julia> @macroexpand(@m("Iblis"))
+  :((Main.println)("Hello, ", "Iblis"))
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Macro -- Syntax Sugar}
+  在 call 一個 macro 的時候，可以偷懶不寫括號。
+
+\begin{lstlisting}
+  julia> @m "Iblis"
+Hello, Iblis
+\end{lstlisting}
+
+  而所有參數用空白切開。
+\end{frame}
+
+
 \end{document}
