@@ -158,6 +158,13 @@ julia> eval(e)
 \end{frame}
 
 
+\begin{frame}[c]{}
+  \centering
+  \Large
+  The \texttt{Symbol} Type
+\end{frame}
+
+
 \begin{frame}[fragile]{Symbol}
   Like symbol in Lisp or atom in Erlang.
 
@@ -195,6 +202,81 @@ julia> eval(e)
   2-element Array{Any,1}:
     :x
    1
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[c]{}
+  \centering
+  \Large
+  Interpolation
+
+  \large
+  動態的產生 \texttt{Expr} 的手段之一
+\end{frame}
+
+
+\begin{frame}[fragile]{Interpolation}
+  用 \texttt{\$} 來 reference 外面的變數
+
+  長得很像 string interpolation
+
+\begin{lstlisting}
+  julia> x = 42;
+
+  julia> e = :($x + y)
+  :(42 + y)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Splatting Interpolation}
+  可以展開整個 array
+
+\begin{lstlisting}
+  julia> A
+  3-element Array{Symbol,1}:
+   :x
+   :y
+   :z
+
+  julia> e = :(f($(A...)))
+  :(f(x, y, z))
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Eval and Scope}
+  打開 REPL 後，我在哪裡？
+
+  \pause
+
+\begin{lstlisting}
+  julia> @__MODULE__
+  Main
+\end{lstlisting}
+
+  \pause
+
+\begin{lstlisting}
+  foo = 1
+  e = :(foo += 42)
+  eval(e)
+\end{lstlisting}
+
+  請問現在 \texttt{foo} 是多少？
+\end{frame}
+
+\begin{frame}[fragile]{Eval and Scope}
+  \texttt{eval} 的影響範圍是 module 的 global scope
+
+\begin{lstlisting}
+  function f()
+    e = :(foo -= 100)
+    eval(e)
+  end
+
+  foo = 1
+  f()
 \end{lstlisting}
 \end{frame}
 
