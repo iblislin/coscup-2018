@@ -178,4 +178,24 @@ julia> eval(e)
 \end{frame}
 
 
+\begin{frame}[fragile]{Symbol}
+  在 \texttt{Expr} 中的 identifier 會使用 symbol
+  \begin{itemize}
+    \item variable name
+    \item function name
+    \item ...
+  \end{itemize}
+
+  \pause
+\begin{lstlisting}
+  julia> e = :(x = 1)
+  :(x = 1)
+
+  julia> e.args
+  2-element Array{Any,1}:
+    :x
+   1
+\end{lstlisting}
+\end{frame}
+
 \end{document}
