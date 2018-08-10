@@ -158,4 +158,24 @@ julia> eval(e)
 \end{frame}
 
 
+\begin{frame}[fragile]{Symbol}
+  Like symbol in Lisp or atom in Erlang.
+
+\begin{lstlisting}
+  julia> :foo
+  :foo
+
+  julia> typeof(:foo)
+  Symbol
+\end{lstlisting}
+
+  \pause
+
+\begin{lstlisting}
+  julia> Symbol("bar-1")
+  Symbol("bar-1")
+\end{lstlisting}
+\end{frame}
+
+
 \end{document}
