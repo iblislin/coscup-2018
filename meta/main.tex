@@ -229,6 +229,7 @@ julia> eval(e)
 \end{lstlisting}
 \end{frame}
 
+
 \begin{frame}[fragile]{Splatting Interpolation}
   可以展開整個 array
 
@@ -266,8 +267,13 @@ julia> eval(e)
   請問現在 \texttt{foo} 是多少？
 \end{frame}
 
+
 \begin{frame}[fragile]{Eval and Scope}
   \texttt{eval} 的影響範圍是 module 的 global scope
+
+  能夠對 module 的 global scope 有 side effect
+
+  \pause
 
 \begin{lstlisting}
   function f()
@@ -277,6 +283,65 @@ julia> eval(e)
 
   foo = 1
   f()
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Eval and Scope}
+  那麼這個呢？
+
+\begin{lstlisting}
+  e = :(bar + 1)
+  eval(e)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Example}
+  那麼我們現在來實際解決點問題。
+
+  \pause
+
+  現在希望有個 helper function，
+  這個 function 能夠對任意的新 \texttt{struct} 建立好看的 \texttt{show} function
+\end{frame}
+
+
+\begin{frame}[fragile]{Example}
+\begin{lstlisting}
+julia> struct Bar
+         a::Int
+         b::Bool
+         magic::Any
+       end
+
+julia> bar = Bar(1, false, "good")
+Bar(1, false, "good")
+
+julia> make_show(Bar, [:magic, :b])
+
+julia> bar
+magic -> good
+b -> false
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Example}
+
+\begin{lstlisting}[
+  basicstyle={\color{jlstring}\ttfamily\scriptsize\selectfont},
+  linewidth=350pt,
+  basewidth=4pt,
+  xleftmargin=-10pt,
+  framexleftmargin=0pt,]
+function make_show(T::DataType, fields::Vector{Symbol})
+  fields = QuoteNode.(fields)
+  print_exprs = [ :(println(io, "$($f) -> ", getfield(x, $f))) for f in fields]
+
+  e = :(Base.show(io::IO, x::$T) = $(print_exprs...))
+  eval(e)
+end
 \end{lstlisting}
 \end{frame}
 
